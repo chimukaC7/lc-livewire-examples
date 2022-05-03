@@ -14,7 +14,17 @@ class DataTables extends Component
     public $search;
     public $sortField;
     public $sortAsc = true;
-    protected $queryString = ['search', 'active', 'sortAsc', 'sortField'];
+
+    //the states that you want to keep track of in the query string
+    //protected $queryString = ['search', 'active', 'sortAsc', 'sortField'];
+
+    //Won't show 'search' in the query string if it is equal to '', and won't show active is if is equal to true.
+    public $queryString = [
+        'search' => ['except' => ''],
+        'active' => ['except' => true],
+        'sortAsc',
+        'sortField'
+    ];
 
     public function sortBy($field)
     {
@@ -27,6 +37,7 @@ class DataTables extends Component
         $this->sortField = $field;
     }
 
+    //resetting the pagination as we search
     public function updatingSearch()
     {
         $this->resetPage();
@@ -35,13 +46,15 @@ class DataTables extends Component
     public function render()
     {
         return view('livewire.data-tables', [
-            'users' => User::where(function ($query) {
+            'users' => User::where(function ($query) {//using a callback
+                //searching
                 $query->where('name', 'like', '%' . $this->search . '%')
                     ->orWhere('email', 'like', '%' . $this->search . '%');
             })->where('active', $this->active)
-            ->when($this->sortField, function ($query) {
-                $query->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
-            })->paginate(10),
+                //sorting
+                ->when($this->sortField, function ($query) {
+                    $query->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
+                })->paginate(10),
         ]);
     }
 

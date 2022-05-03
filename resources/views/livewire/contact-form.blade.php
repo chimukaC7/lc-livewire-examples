@@ -53,11 +53,13 @@
                 </p>
             </div>
         </div>
+
         <div class="bg-white py-16 px-4 sm:px-6 lg:col-span-3 lg:py-24 lg:px-8 xl:pl-12">
             <div class="max-w-lg mx-auto lg:max-w-none">
                 <form wire:submit.prevent="submitForm" action="/contact" method="POST" class="grid grid-cols-1 row-gap-6">
                     @csrf
 
+{{--                    @if (session('success_message'))--}}
                     @if ($successMessage)
                     <div class="rounded-md bg-green-50 p-4 mt-8">
                         <div class="flex">
@@ -92,6 +94,10 @@
                     </div>
                     @endif
 
+                    {{--
+                      I personally don't think the network requests are a big issue. If you think they are, you can use wire:model.defer to keep them to a minimum.
+                      --}}
+
                     <div>
                         <label for="name" class="sr-only">Full name</label>
                         <div class="relative rounded-md shadow-sm">
@@ -102,8 +108,8 @@
                         @error('name')
                         <p class="text-red-500 mt-1">{{ $message }}</p>
                         @enderror
-
                     </div>
+
                     <div>
                         <label for="email" class="sr-only">Email</label>
                         <div class="relative rounded-md shadow-sm">
@@ -115,6 +121,7 @@
                         <p class="text-red-500 mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+
                     <div>
                         <label for="phone" class="sr-only">Phone</label>
                         <div class="relative rounded-md shadow-sm">
@@ -126,6 +133,7 @@
                         <p class="text-red-500 mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+
                     <div>
                         <label for="message" class="sr-only">Message</label>
                         <div class="relative rounded-md shadow-sm">
@@ -137,6 +145,11 @@
                         <p class="text-red-500 mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    {{--To avoud the spinning icon showing up every network request,you set the target
+                        -meaning the spinner should show only when you click on the submit buttion
+                        we only want it to show when we are waiting for a respone from the submitForm method
+                     --}}
                     <div class="">
                         <span class="inline-flex rounded-md shadow-sm">
                             <button type="submit"
@@ -152,6 +165,7 @@
                             </button>
                         </span>
                     </div>
+
                 </form>
             </div>
         </div>
