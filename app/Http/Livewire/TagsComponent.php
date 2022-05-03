@@ -9,6 +9,7 @@ class TagsComponent extends Component
 {
     public $tags;
 
+    //if the tag and method are the same, you just pass in the tag
     protected $listeners = ['tagAdded', 'tagRemoved'];
 
     public function mount()

@@ -17,5 +17,5 @@
             {{-- alert('A tag was added: ' + tag); --}}
         })
 ">
-
+{{--use wire:ignore to prevent the component from re-rendering--}}
 </div>

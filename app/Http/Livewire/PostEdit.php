@@ -10,6 +10,9 @@ class PostEdit extends Component
 {
     use WithFileUploads;
 
+    //Don't forget to run storage:link to make uploaded files accessible on the frontend :)
+    //php artisan storage:link
+
     public $post;
     public $title;
     public $content;
@@ -33,7 +36,7 @@ class PostEdit extends Component
     public function updatedPhoto()
     {
         try {
-            $this->tempUrl = $this->photo->temporaryUrl();
+            $this->tempUrl = $this->photo->temporaryUrl();//temporaryUrl() only works for images
         } catch (\Exception $e) {
             $this->tempUrl = ''; // placeholder image
         }
@@ -43,6 +46,7 @@ class PostEdit extends Component
 
     public function submitForm()
     {
+
         $this->validate();
 
         $imageToShow = $this->post->photo ?? null;
@@ -50,6 +54,7 @@ class PostEdit extends Component
         $this->post->update([
             'title' => $this->title,
             'content' => $this->content,
+            //'photo' => $this->photo ? $this->photo->store('photos', 'public') : null,
             'photo' => $this->photo ? $this->photo->store('photos', 'public') : $imageToShow,
         ]);
 
