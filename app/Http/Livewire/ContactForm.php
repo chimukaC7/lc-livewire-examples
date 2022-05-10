@@ -10,6 +10,7 @@ class ContactForm extends Component
 {
     //You can use both livewire:make and make:livewire to create the component
 
+    //the state that you need
     public $name;
     public $email;
     public $phone;
@@ -18,7 +19,7 @@ class ContactForm extends Component
     //if you don't want to use flash, you can use a piece of state that holds the flash message
     public $successMessage;
 
-    //when rules are definted as property or instance variable, you no longer need to pass them
+    //when rules are defined as property or instance variable, you no longer need to pass them
     protected $rules = [
         'name' => 'required',
         'email' => ['required','email'],
@@ -47,8 +48,12 @@ class ContactForm extends Component
         sleep(1);
         Mail::to('andre@andre.com')->send(new ContactFormMailable($contact));
 
+        //if you do not want to use flash
         $this->successMessage = 'We received your message successfully and will get back to you shortly!';
         // session()->flash('success_message', 'We received your message successfully and will get back to you shortly!');
+
+        //since we are not redirecting, we use reset the form
+        //there is no full page refresh
 
         //Instead of using the private function resetForm() you can use $this->reset() in the public function submitForm().
         $this->resetForm();
