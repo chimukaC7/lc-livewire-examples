@@ -29,7 +29,7 @@ class ContactForm extends Component
 
     //using a hook
     //whenever any the stats changes this method is called
-    public function updated($propertyName)
+    public function updated($propertyName)//whatever was updated
     {
         $this->validateOnly($propertyName);
     }

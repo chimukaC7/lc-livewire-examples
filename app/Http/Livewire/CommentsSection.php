@@ -18,6 +18,7 @@ class CommentsSection extends Component
         'post' => 'required',
     ];
 
+    //similar to a constructor
     public function mount(Post $post)
     {
         $this->post = $post;

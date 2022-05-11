@@ -44,7 +44,9 @@
                             </a>
                         </div>
                     </div>
+
                     <livewire:search-dropdown />
+
                     <div class="flex items-center lg:hidden">
                         <!-- Mobile menu button -->
                         <button

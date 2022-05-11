@@ -24,6 +24,7 @@ class SearchDropdown extends Component
 
         //dd($response->json());
 
+        //assigning retrieved results
         $this->searchResults = $response->json()['results'];
     }
 
